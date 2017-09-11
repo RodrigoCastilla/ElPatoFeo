@@ -1,0 +1,7 @@
+Bienvenidos al sistema de ventas 
+ Patito Feo 
+ Numero de Boletos comprados. 
+ Clase Lata: 0
+ Clase Cobre: 0
+ Clase Diamante: 0Clase Plata: -1
+ Clase Oro: 0| Y el total costo es de: -250
