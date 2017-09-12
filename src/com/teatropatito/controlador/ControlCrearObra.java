@@ -200,11 +200,13 @@ public class ControlCrearObra implements ActionListener{
         Boolean esNueva=false;
         try {
             ArrayList<Obra> listaObras = new ArrayList<Obra>();
+            ArrayList<Funcion> listaFunciones = new ArrayList<Funcion>();
             DAOObra datosObras = new DAOObra();
-            
+    
             listaObras =datosObras.consultar(" nombre= '"+nuevaObra.getTxtNombreObra().getText()+"'" );// regresa un array 
             //con las obras que tienen nombres iguales
-            if(listaObras.isEmpty()){
+            //listaFunciones = datosObras.consultarFunciones(nombre)
+            if(listaObras.isEmpty() && listaObras.isEmpty()){
                 esNueva=true; 
             }else{
                 escribirMensaje(" ya existe una obra con ese nombre");

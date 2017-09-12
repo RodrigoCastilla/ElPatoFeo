@@ -71,6 +71,7 @@ public class CrearNuevaObraVista extends javax.swing.JFrame {
     public JButton getRegresar() {
         return regresar;
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -135,39 +136,39 @@ public class CrearNuevaObraVista extends javax.swing.JFrame {
         etiquetaInicio.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         etiquetaInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/teatropatito/controlador/fotos/INICIO.jpg"))); // NOI18N
         getContentPane().add(etiquetaInicio);
-        etiquetaInicio.setBounds(20, 170, 110, 50);
+        etiquetaInicio.setBounds(310, 160, 110, 50);
 
         etiquetaHoraFin.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         etiquetaHoraFin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/teatropatito/controlador/fotos/FIN.jpg"))); // NOI18N
         getContentPane().add(etiquetaHoraFin);
-        etiquetaHoraFin.setBounds(20, 240, 110, 50);
+        etiquetaHoraFin.setBounds(580, 160, 110, 50);
 
         guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/teatropatito/controlador/fotos/aceptar.jpg"))); // NOI18N
         getContentPane().add(guardar);
-        guardar.setBounds(240, 470, 108, 41);
+        guardar.setBounds(960, 480, 108, 41);
 
         limpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/teatropatito/controlador/fotos/LIMPIAR.jpg"))); // NOI18N
         getContentPane().add(limpiar);
-        limpiar.setBounds(110, 470, 106, 40);
+        limpiar.setBounds(740, 480, 106, 40);
 
         regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/teatropatito/controlador/fotos/Regresar.jpg"))); // NOI18N
         getContentPane().add(regresar);
-        regresar.setBounds(370, 470, 111, 40);
+        regresar.setBounds(850, 480, 111, 40);
 
         fechaLbl.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         fechaLbl.setText("Fecha: ");
         getContentPane().add(fechaLbl);
-        fechaLbl.setBounds(20, 100, 100, 50);
+        fechaLbl.setBounds(20, 160, 100, 50);
 
         horaFin.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         getContentPane().add(horaFin);
-        horaFin.setBounds(170, 240, 130, 40);
+        horaFin.setBounds(720, 170, 130, 40);
 
         horaInicio.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         getContentPane().add(horaInicio);
-        horaInicio.setBounds(170, 180, 130, 40);
+        horaInicio.setBounds(430, 170, 130, 40);
         getContentPane().add(fecha);
-        fecha.setBounds(170, 100, 170, 40);
+        fecha.setBounds(120, 170, 170, 40);
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -181,9 +182,9 @@ public class CrearNuevaObraVista extends javax.swing.JFrame {
         jScrollPane1.setViewportView(Tabla);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(580, 20, 500, 270);
+        jScrollPane1.setBounds(30, 220, 1030, 240);
         getContentPane().add(telefono);
-        telefono.setBounds(120, 390, 70, 20);
+        telefono.setBounds(100, 80, 100, 22);
 
         telefonoAlt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,7 +192,7 @@ public class CrearNuevaObraVista extends javax.swing.JFrame {
             }
         });
         getContentPane().add(telefonoAlt);
-        telefonoAlt.setBounds(310, 390, 59, 20);
+        telefonoAlt.setBounds(350, 80, 100, 22);
 
         correo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,47 +200,47 @@ public class CrearNuevaObraVista extends javax.swing.JFrame {
             }
         });
         getContentPane().add(correo);
-        correo.setBounds(470, 400, 70, 20);
+        correo.setBounds(100, 120, 100, 22);
         getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(20, 350, 540, 100);
+        jSeparator1.setBounds(10, 150, 1070, 10);
 
         jLabel2.setText("telefono");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(50, 390, 40, 14);
+        jLabel2.setBounds(30, 80, 46, 16);
 
         jLabel3.setText("telefono Alt.");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(220, 390, 60, 14);
+        jLabel3.setBounds(260, 80, 69, 16);
 
         jLabel4.setText("correo");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(410, 400, 31, 14);
+        jLabel4.setBounds(30, 120, 37, 16);
         getContentPane().add(descripcion);
-        descripcion.setBounds(430, 210, 130, 20);
+        descripcion.setBounds(580, 30, 430, 60);
 
         jLabel6.setText("descripción");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(330, 210, 70, 14);
+        jLabel6.setBounds(480, 40, 70, 16);
 
         jLabel7.setText("actores");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(330, 250, 60, 14);
+        jLabel7.setBounds(490, 110, 60, 16);
         getContentPane().add(actores);
-        actores.setBounds(430, 250, 130, 20);
+        actores.setBounds(580, 100, 430, 40);
 
         agregar.setText("agregar Horario");
         getContentPane().add(agregar);
-        agregar.setBounds(620, 340, 140, 23);
+        agregar.setBounds(910, 160, 140, 25);
 
         quitar.setText("quitar Horario");
         getContentPane().add(quitar);
-        quitar.setBounds(840, 340, 120, 23);
+        quitar.setBounds(910, 190, 140, 25);
 
         jLabel5.setText("Precio Diamante");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(330, 170, 100, 14);
+        jLabel5.setBounds(250, 120, 100, 16);
         getContentPane().add(precioDiamante);
-        precioDiamante.setBounds(430, 170, 130, 20);
+        precioDiamante.setBounds(360, 120, 90, 22);
 
         setSize(new java.awt.Dimension(1106, 570));
         setLocationRelativeTo(null);
