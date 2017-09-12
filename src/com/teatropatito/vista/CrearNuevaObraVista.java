@@ -324,7 +324,7 @@ public class CrearNuevaObraVista extends javax.swing.JFrame {
     public JDateChooser getFecha(){
         return fecha;
     }
-    
+    //gg
     
     
     
