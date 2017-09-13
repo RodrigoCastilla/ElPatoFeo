@@ -137,26 +137,20 @@ public class ControlCrearObra implements ActionListener{
         try {
             DAOObra tablaObra = new DAOObra();
             DAOFuncion tablaFunciones = new DAOFuncion();
+            funciones.add(new Funcion("", "", "" ,"", "","", "", "" ,""));
             Obra obra= new Obra(
                     nuevaObra.getTxtNombreObra().getText(),
-                    nuevaObra.getHoraInicio().getMinutes()+"",
-                    nuevaObra.getHoraInicio().getHours()  +"",
-                    nuevaObra.getHoraFin().getMinutes()   +"",
-                    nuevaObra.getHoraFin().getHours()     +"",
-                    nuevaObra.getFecha().getCalendar().get(Calendar.DAY_OF_MONTH) +"",
-                    (nuevaObra.getFecha().getCalendar().get(Calendar.MONTH)+1)    +"",
-                    nuevaObra.getFecha().getCalendar().get(Calendar.YEAR)         +"",
                     nuevaObra.getPrecioDiamante().getText(),
                     nuevaObra.getDescripcion().getText(),
                     nuevaObra.getActores().getText(),
                     nuevaObra.getCorreo().getText(),
                     nuevaObra.getTelefono().getText(),
-                    nuevaObra.getTelefonoAlt().getText()
+                    nuevaObra.getTelefonoAlt().getText(),
+                    funciones
             );
             
-            funciones.add(new Funcion("a","", "", "",));
-                    nuevaObra.getHoraInicio()
-            );
+            //funciones.add(new Funcion("a"," ","","","", "","", "", "");
+            
             int num= tablaObra.agregar(obra);
             guardarHorarios();
 

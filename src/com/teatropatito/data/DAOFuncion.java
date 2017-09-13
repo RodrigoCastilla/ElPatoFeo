@@ -26,15 +26,16 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         Statement sentencia = con.createStatement();
 
         
-        String orden ="INSERT INTO public.\"funciones\" (num,minuto_inicio,hora_inicio, minuto_final , hora_final, dia, mes, año, estado"
-                + ") VALUES ("+"'" + num + "',"+
-                "'" + e.getMinutoInicio()+ "', '" +  e.getHoraInicio()  +"',  "+
+        String orden ="INSERT INTO public.\"funciones\" (num,obra, minuto_inicio,hora_inicio,"
+                                                                            + " minuto_final , hora_final, dia, mes, año, estado"
+                + ") VALUES ("+"'" + num + "', '" + e.getNombre()       +"' ,"+
+                "'" + e.getMinutoInicio()+ "', '" + e.getHoraInicio()   +"', "+
                 "'" + e.getMinutoFinal() + "', '" + e.getHoraFinal()    + "', '" + e.getDia() +"', "+
                 "'" + e.getMes()         + "', '" + e.getAño()          + "' , 'programada');" ;
         
         System.out.println(orden);
         
-         DAOAsiento baseDatosAsientos= new DAOAsiento();
+        DAOAsiento baseDatosAsientos= new DAOAsiento();
         baseDatosAsientos.crearBaseDatosAsientos(e.getNombre(), num );
         baseDatosAsientos.insertarAsientos(e.getNombre()+num+"");
         
@@ -47,17 +48,15 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
   
     }
     
-    
-    
-    public int cancelarFuncion(String nombre, String num) throws SQLException {
+    public int cancelarFuncion(String nombreObra, String num) throws SQLException {
     
         int numFilas = 0;
         Connection con = getConeccion();
         char comillas= (char)34;
         
-        String orden = "UPDATE public."+ comillas+nombre+"_funciones"+ comillas + " SET " +
+        String orden = "UPDATE public."+ comillas+"funciones"+ comillas + " SET " +
                 " estado='cancelada' "+
-                " WHERE num='"+num+"';";
+                " WHERE (num='"+num+"') and (obra='"+ nombreObra + "');";
         
         System.out.println(orden);
         Statement sentencia = con.createStatement();
@@ -74,7 +73,7 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         
         ArrayList<Funcion> lista = new ArrayList<Funcion>();
         Connection con = getConeccion();
-        String seleccion = "SELECT * FROM \""+ nombre+ "_funciones\" WHERE estado= 'programada'";
+        String seleccion = "SELECT * FROM \"funciones\" WHERE estado= 'programada'";
         PreparedStatement ps = con.prepareStatement(seleccion);
         ResultSet rs = ps.executeQuery();
         
@@ -89,17 +88,19 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         return lista;
                 
     }
-    public ArrayList<Funcion> consultarFuncionesCoincidentes(String nombre) throws SQLException {
+    
+    public ArrayList<Funcion> consultarTodas() throws SQLException {
         
         ArrayList<Funcion> lista = new ArrayList<Funcion>();
         Connection con = getConeccion();
-        String seleccion = "SELECT * FROM \""+ nombre+ "_funciones\" WHERE estado= 'programada'";
+        String seleccion = "SELECT * FROM \"funciones\" ";
         PreparedStatement ps = con.prepareStatement(seleccion);
         ResultSet rs = ps.executeQuery();
         
         while (rs.next()) {
-            Funcion funcion= new Funcion(rs.getString("minuto_inicio"), rs.getString("hora_inicio"), rs.getString("minuto_final"), rs.getString("hora_final"),
-                                rs.getString("hora_final"), rs.getString("dia"), rs.getString("mes"), rs.getString("año"), rs.getString("num"));
+            Funcion funcion= new Funcion(rs.getString("hora_inicio"), rs.getString("hora_final"), rs.getString("minuto_inicio"), rs.getString("minuto_final"),
+                                            rs.getString("dia"), rs.getString("mes"), 
+                                                rs.getString("año"), rs.getString("num"), rs.getString("obra"));
            
             lista.add(funcion);
         }
@@ -108,7 +109,8 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         return lista;
                 
     }
-
+    
+    
 
     @Override
     public int eliminar(String condicion) throws SQLException {
@@ -142,27 +144,52 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         return numFilas;
     }
 
-
-        public void crearTablaFunciones() {
-        
-        try {
-            crearTabla("funciones");
-            crearColumna("funciones", "num");
-            crearColumna("funciones", "minuto_inicio");
-            crearColumna("funciones", "hora_inicio");
-            crearColumna("funciones", "minuto_final");
-            crearColumna("funciones", "hora_final");
-            crearColumna("funciones", "dia");
-            crearColumna("funciones", "mes");
-            crearColumna("funciones", "año");
-            crearColumna("funciones", "estado");
-            
-            
-        } catch (SQLException ex) {
-            System.out.println("la tabla de horarios para funciones ya fue creada");
-        }  
     
-    }
+        public void crearTablaFunciones() {
+
+    try {
+        crearTabla("funciones");
+        
+        crearColumna("funciones", "num"         );
+        crearColumna("funciones", "obra"         );
+        crearColumna("funciones", "minuto_inicio");
+        crearColumna("funciones", "hora_inicio" );
+        crearColumna("funciones", "minuto_final");
+        crearColumna("funciones", "hora_final"  );
+        crearColumna("funciones", "dia"         );
+        crearColumna("funciones", "mes"         );
+        crearColumna("funciones", "año"         );
+        crearColumna("funciones", "estado"      );
+
+
+    } catch (SQLException ex) {
+        System.out.println("la tabla de funcion ya fue creada");
+    }  
+
+}
+
+    
+//        public void crearTablaFunciones(String nombre) {
+//        
+//        try {
+//            crearTabla(nombre);
+//            
+//            crearColumna(nombre, "num");
+//            crearColumna(nombre, "minuto_inicio");
+//            crearColumna(nombre, "hora_inicio");
+//            crearColumna(nombre, "minuto_final");
+//            crearColumna(nombre, "hora_final");
+//            crearColumna(nombre, "dia");
+//            crearColumna(nombre, "mes");
+//            crearColumna(nombre, "año");
+//            crearColumna(nombre, "estado");
+//            
+//            
+//        } catch (SQLException ex) {
+//            System.out.println("la tabla de horarios para "+nombre+ "ya fue creada");
+//        }  
+//    
+//    }
 
     @Override
     public int agregar(Funcion entidad) throws SQLException {
