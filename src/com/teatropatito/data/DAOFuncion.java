@@ -26,7 +26,7 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         Statement sentencia = con.createStatement();
 
         
-        String orden ="INSERT INTO public.\""+ e.getNombre()+"_funciones" +"\" (num,minuto_inicio,hora_inicio, minuto_final , hora_final, dia, mes, año, estado"
+        String orden ="INSERT INTO public.\"funciones\" (num,minuto_inicio,hora_inicio, minuto_final , hora_final, dia, mes, año, estado"
                 + ") VALUES ("+"'" + num + "',"+
                 "'" + e.getMinutoInicio()+ "', '" +  e.getHoraInicio()  +"',  "+
                 "'" + e.getMinutoFinal() + "', '" + e.getHoraFinal()    + "', '" + e.getDia() +"', "+
@@ -89,6 +89,25 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         return lista;
                 
     }
+    public ArrayList<Funcion> consultarFuncionesCoincidentes(String nombre) throws SQLException {
+        
+        ArrayList<Funcion> lista = new ArrayList<Funcion>();
+        Connection con = getConeccion();
+        String seleccion = "SELECT * FROM \""+ nombre+ "_funciones\" WHERE estado= 'programada'";
+        PreparedStatement ps = con.prepareStatement(seleccion);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            Funcion funcion= new Funcion(rs.getString("minuto_inicio"), rs.getString("hora_inicio"), rs.getString("minuto_final"), rs.getString("hora_final"),
+                                rs.getString("hora_final"), rs.getString("dia"), rs.getString("mes"), rs.getString("año"), rs.getString("num"));
+           
+            lista.add(funcion);
+        }
+        ps.close();
+        cerrarConeccion(con);
+        return lista;
+                
+    }
 
 
     @Override
@@ -124,23 +143,23 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
     }
 
 
-        public void crearTablaFunciones(String nombre) {
+        public void crearTablaFunciones() {
         
         try {
-            crearTabla(nombre);
-            crearColumna(nombre, "num");
-            crearColumna(nombre, "minuto_inicio");
-            crearColumna(nombre, "hora_inicio");
-            crearColumna(nombre, "minuto_final");
-            crearColumna(nombre, "hora_final");
-            crearColumna(nombre, "dia");
-            crearColumna(nombre, "mes");
-            crearColumna(nombre, "año");
-            crearColumna(nombre, "estado");
+            crearTabla("funciones");
+            crearColumna("funciones", "num");
+            crearColumna("funciones", "minuto_inicio");
+            crearColumna("funciones", "hora_inicio");
+            crearColumna("funciones", "minuto_final");
+            crearColumna("funciones", "hora_final");
+            crearColumna("funciones", "dia");
+            crearColumna("funciones", "mes");
+            crearColumna("funciones", "año");
+            crearColumna("funciones", "estado");
             
             
         } catch (SQLException ex) {
-            System.out.println("la tabla de horarios para "+nombre+ "ya fue creada");
+            System.out.println("la tabla de horarios para funciones ya fue creada");
         }  
     
     }

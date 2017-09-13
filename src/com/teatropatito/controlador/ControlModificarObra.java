@@ -61,12 +61,6 @@ public class ControlModificarObra implements ActionListener{
 
             //carga los elementos en la interfaz grafica
             modificarObra.getNombreObraTxt().setText(obras.get(0).getNombre());
-            //modificarObra.getHoraInicio().setTimeOnDate(date);
-            modificarObra.getHoraInicio().setText(obras.get(0).getHoraFinal());//.setText(obras.get(0).getHoraInicio());
-            modificarObra.getHoraFin().setText(obras.get(0).getHoraFinal());
-            modificarObra.getMinInicio().setText(obras.get(0).getMinutoInicio());//.setText(obras.get(0).getHoraInicio());
-            modificarObra.getMinFin().setText(obras.get(0).getMinutoFinal());
-//            modificarObra.getFechaVista().setText(obras.get(0).getFecha());
             
             
             
@@ -80,20 +74,14 @@ public class ControlModificarObra implements ActionListener{
         try {
             DAOObra baseDatosObras= new DAOObra();
            
-            Obra nuevaObra= new Obra(
-                    modificarObra.getNombreObraTxt().getText(),
-                    modificarObra.getHoraInicio().getText(),
-                    
-                    modificarObra.getHoraFin().getText() /* ,*/
-                  //  modificarObra.getFechaVista().getText()
-            );
-            nuevaObra.setHoraInicio(modificarObra.getHoraInicio().getText());
+            Obra nuevaObra= new Obra(modificarObra.getNombreObraTxt().getText());
+/*            nuevaObra.setHoraInicio(modificarObra.getHoraInicio().getText());
             nuevaObra.setMinutoInicio(modificarObra.getMinInicio().getText());
             nuevaObra.setHoraFinal(modificarObra.getHoraFin().getText());
             nuevaObra.setMinutoFinal(modificarObra.getMinFin().getText()); 
-            nuevaObra.setDia((modificarObra.getFecha().getCalendar().get(Calendar.DAY_OF_MONTH)));
-            nuevaObra.setMes((modificarObra.getFecha().getCalendar().get(Calendar.MONTH)));
-            nuevaObra.setAño((modificarObra.getFecha().getCalendar().get(Calendar.YEAR))); 
+            nuevaObra.setDia((modificarObra.getFecha().getCalendar().get(Calendar.DAY_OF_MONTH)) + "");
+            nuevaObra.setMes((modificarObra.getFecha().getCalendar().get(Calendar.MONTH))+ "");
+            nuevaObra.setAño((modificarObra.getFecha().getCalendar().get(Calendar.YEAR))+""); */
             String nombreAntiguo = modificarObra.getObrasCBX().getSelectedItem().toString();
             String nuevoNombre= modificarObra.getNombreObraTxt().getText();
             

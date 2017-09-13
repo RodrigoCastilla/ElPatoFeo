@@ -5,19 +5,14 @@
  */
 package com.teatropatito.dominio;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author melee_000
  */
 public class Obra {
     private String nombre;
-    private String horaInicio;
-    private String horaFinal;
-    private String minutoInicio;
-    private String minutoFinal;
-    private String dia;
-    private String mes;
-    private String año;
     private String precioDiamante;
     private String descripcion;
     private String Actores;
@@ -25,27 +20,24 @@ public class Obra {
     private String telefono;
     private String telefonoAlt;
     private String estado;
+    private ArrayList<Funcion> funciones;
     
     
     
     //mientras se modifica
-    
-
-    public Obra(String nombre, String minuInicio, String horaInicio, String minutoFinal, String horaFinal, String dia, String mes, String año, String precioDiamante, String descripcion, String Actores, String correo, String telefono, String telefonoAlt) {
+    public Obra(String nombre){
         this.nombre = nombre;
-        this.minutoInicio = minuInicio;
-        this.horaInicio = horaInicio;
-        this.minutoFinal = minutoFinal;
-        this.horaFinal = horaFinal;
-        this.dia = dia;
-        this.mes = mes;
-        this.año = año;
+    }
+
+    public Obra(String nombre, String precioDiamante, String descripcion, String Actores, String correo, String telefono, String telefonoAlt, ArrayList<Funcion> funciones) {
+        this.nombre = nombre;
         this.precioDiamante = precioDiamante;
         this.descripcion = descripcion;
         this.Actores = Actores;
         this.correo = correo;
         this.telefono = telefono;
         this.telefonoAlt = telefonoAlt;
+        this.funciones = funciones;
     }
 
     public Obra(String nombre, String precioDiamante, String descripcion, String Actores, String correo, String telefono, String telefonoAlt,String est) {
@@ -58,67 +50,13 @@ public class Obra {
         this.telefonoAlt = telefonoAlt;
         this.estado= est;
     }
-    
-    public Obra(String nombre, String horaInicio, String horaFinal) {
-        this.nombre = nombre;
-        this.horaInicio = horaInicio;
-        this.horaFinal = horaFinal;
-    }
-    public Obra(String nombre, String horaInicio, String horaFinal, String fecha){
-        this.nombre = nombre;
-        this.horaInicio = horaInicio;
-        this.horaFinal = horaFinal;
-    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setHoraInicio(String horaInicio) {
-        this.horaInicio = horaInicio;
-    }
-    
-
-    public void setHoraFinal(String horaFinal) {
-        this.horaFinal = horaFinal;
-    }
-
-    public String getDia() {
-        return dia;
-    }
-
-    public void setDia(String dia) {
-        this.dia = dia;
-    }
-
-    public String getMes() {
-        return mes;
-    }
-
-    public void setMes(String mes) {
-        this.mes = mes;
-    }
-
-    public String getAño() {
-        return año;
-    }
-
-    public void setAño(String año) {
-        this.año = año;
-    }
-
-
-
     public String getNombre() {
         return nombre;
-    }
-
-    public String getHoraInicio() {
-        return horaInicio;
-    }
-
-    public String getHoraFinal() {
-        return horaFinal;
     }
 
     public String getPrecioDiamante() {
@@ -169,23 +107,21 @@ public class Obra {
         this.telefonoAlt = telefonoAlt;
     }
 
-    public String getMinutoInicio() {
-        return minutoInicio;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setMinutoInicio(String minutoInicio) {
-        this.minutoInicio = minutoInicio;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
-    public String getMinutoFinal() {
-        return minutoFinal;
+    public ArrayList<Funcion> getFunciones() {
+        return funciones;
     }
 
-    public void setMinutoFinal(String minutoFinal) {
-        this.minutoFinal = minutoFinal;
+    public void setFunciones(ArrayList<Funcion> funciones) {
+        this.funciones = funciones;
     }
-    
-    
     
     
 }

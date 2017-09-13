@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ControlCrearObra implements ActionListener{
     private CrearNuevaObraVista nuevaObra;
+    ArrayList<Funcion> funciones = new ArrayList<Funcion>();
     private Obra obra;
     
 
@@ -54,7 +55,7 @@ public class ControlCrearObra implements ActionListener{
                 
                if(nuevaObra.getTxtNombreObra().getText().compareTo("")!=0){// verificar que se introdujo un nombre
                    System.out.println(VerificarRepeticion());
-                   if(VerificarRepeticion()==true){ // true significa que no se encontro repeticion
+                   if(VerificarRepeticion()){ // true significa que no se encontro repeticion
                        
                        guardarObra();
                       
@@ -134,10 +135,8 @@ public class ControlCrearObra implements ActionListener{
     public void guardarObra(){
         
         try {
-            DAOObra baseDatos = new DAOObra();
-            String[] tempFechaObra = nuevaObra.getFecha().getDateFormatString().split("7");
-            for(int k = 0; k<tempFechaObra.length; k++)
-                System.out.println(tempFechaObra[k]);
+            DAOObra tablaObra = new DAOObra();
+            DAOFuncion tablaFunciones = new DAOFuncion();
             Obra obra= new Obra(
                     nuevaObra.getTxtNombreObra().getText(),
                     nuevaObra.getHoraInicio().getMinutes()+"",
@@ -153,10 +152,13 @@ public class ControlCrearObra implements ActionListener{
                     nuevaObra.getCorreo().getText(),
                     nuevaObra.getTelefono().getText(),
                     nuevaObra.getTelefonoAlt().getText()
+            );
             
-            
-            );                     
-            int num= baseDatos.agregar(obra);
+            funciones.add(new Funcion(
+            ));
+                    nuevaObra.getHoraInicio()
+            );
+            int num= tablaObra.agregar(obra);
             guardarHorarios();
 
 // importante************************************** los horarios son un objeto ... por mientras, los horarios se guardaran aqui
@@ -201,13 +203,12 @@ public class ControlCrearObra implements ActionListener{
     }
     
     
-    
     public Boolean VerificarRepeticion() {
         Boolean esNueva=false;
         try {
             ArrayList<Obra> listaObras = new ArrayList<Obra>();
             DAOObra datosObras = new DAOObra();
-            
+            DAOFuncion datosFunciones = new DAOFuncion();
             listaObras =datosObras.consultar(" nombre= '"+nuevaObra.getTxtNombreObra().getText()+"'" );// regresa un array 
             //con las obras que tienen nombres iguales
             if(listaObras.isEmpty()){
