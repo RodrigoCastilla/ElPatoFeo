@@ -154,8 +154,7 @@ public class ControlCrearObra implements ActionListener{
                     nuevaObra.getTelefonoAlt().getText()
             );
             
-            funciones.add(new Funcion(
-            ));
+            funciones.add(new Funcion("a","", "", "",));
                     nuevaObra.getHoraInicio()
             );
             int num= tablaObra.agregar(obra);
