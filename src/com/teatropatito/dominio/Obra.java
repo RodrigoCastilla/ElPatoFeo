@@ -59,9 +59,6 @@ public class Obra {
         this.estado= est;
     }
     
-    
-    
-    
     public Obra(String nombre, String horaInicio, String horaFinal) {
         this.nombre = nombre;
         this.horaInicio = horaInicio;

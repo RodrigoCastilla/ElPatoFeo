@@ -32,8 +32,6 @@ public class Funcion {
         this.numero= num;
     }
     
-    
-    
 
     public Funcion(String horaInicio, String horaFinal, String minutoInicio, String minutoFinal, String dia, String mes, String año, String num) {
         this.horaInicio = horaInicio;

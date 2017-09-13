@@ -7,6 +7,7 @@ package com.teatropatito.controlador;
 
 
 import com.teatropatito.data.DAOAsiento;
+import com.teatropatito.data.DAOFuncion;
 import com.teatropatito.data.DAOObra;
 import com.teatropatito.dominio.Funcion;
 import com.teatropatito.dominio.Obra;
@@ -70,10 +71,9 @@ public class ControlCrearObra implements ActionListener{
            
        }else if(nuevaObra.getAgregar()== e.getSource()){
            agregarElementoTabla();
-           System.out.println("hey");
            
        }else if(nuevaObra.getQuitar()== e.getSource()){
-           quitarElementosTabla(0);
+           quitarElementosTabla();
        }
        
     }
@@ -83,13 +83,22 @@ public class ControlCrearObra implements ActionListener{
         nuevaObra.getHoraInicio().resetKeyboardActions();
         nuevaObra.getHoraFin().resetKeyboardActions();
         
-        for (int i = 0; i < nuevaObra.getTabla().getRowCount(); i++) {
-            quitarElementosTabla(i);
+        DefaultTableModel modelo = (DefaultTableModel) nuevaObra.getTabla().getModel();
+        System.out.println(nuevaObra.getTabla().getRowCount());
+//        for (int i = nuevaObra.getTabla().getRowCount(); nuevaObra.getTabla().getRowCount() >0 ; i--) {
+//            modelo.removeRow(i);
+//        }
+//        
+        
+        while(nuevaObra.getTabla().getRowCount()>0 ){
+            modelo.removeRow(nuevaObra.getTabla().getRowCount()-1);
         }
+        
     }
     
    
     public void agregarElementoTabla(){
+        try{
         DefaultTableModel modelo = (DefaultTableModel) nuevaObra.getTabla().getModel();
         JTable tabla =  new JTable(modelo); //permite modificar la tabla
         nuevaObra.setTabla(tabla);
@@ -99,26 +108,29 @@ public class ControlCrearObra implements ActionListener{
                     nuevaObra.getFecha().getCalendar().get(Calendar.DAY_OF_MONTH)+"" , (nuevaObra.getFecha().getCalendar().get(Calendar.MONTH)+1) +"",
                             nuevaObra.getFecha().getCalendar().get(Calendar.YEAR)+"" };
         
+
         modelo.addRow(datosObra);
         
-        System.out.println("se hace");
+        
         nuevaObra.getjScrollPane1().updateUI();
-        
-        
+        }catch(NullPointerException e){
+            escribirMensaje("no se han introducido datos");
+        }
     }
     
     
-    public void quitarElementosTabla(int num){
+    public void quitarElementosTabla(){ //Cambiar tu parametro de entrada
         DefaultTableModel modelo = (DefaultTableModel) nuevaObra.getTabla().getModel();
-        JTable tabla =  new JTable(modelo);
-        
-        tabla.getRowCount();
-        modelo.removeRow(num);
-        
-        
+        try{
+            
+            int itemSeleccionado= nuevaObra.getTabla().getSelectedRowCount();
+            modelo.removeRow(itemSeleccionado);
+        }catch(Exception e){
+            escribirMensaje("elige algo >:v");
+        }
+  
     }
     
-   
     public void guardarObra(){
         
         try {
@@ -143,15 +155,9 @@ public class ControlCrearObra implements ActionListener{
                     nuevaObra.getTelefonoAlt().getText()
             
             
-            );
-            
-                      
+            );                     
             int num= baseDatos.agregar(obra);
             guardarHorarios();
-//            por el momento no es necesario
-//            DAOAsiento baseDatosAsientos = new DAOAsiento();
-//            baseDatosAsientos.crearDatos(nuevaObra.getTxtNombreObra().getText());
-
 
 // importante************************************** los horarios son un objeto ... por mientras, los horarios se guardaran aqui
 
@@ -165,7 +171,7 @@ public class ControlCrearObra implements ActionListener{
     public void guardarHorarios() throws SQLException{
         DefaultTableModel modelo = (DefaultTableModel) nuevaObra.getTabla().getModel();
             JTable tabla =  new JTable(modelo);
-            DAOObra baseDatos = new DAOObra();
+            DAOFuncion baseDatosFunciones = new DAOFuncion();
             
             Funcion funcion;
             
@@ -183,7 +189,7 @@ public class ControlCrearObra implements ActionListener{
                             nuevaObra.getTxtNombreObra().getText(),
                             (i+1)+"");
                     
-                    baseDatos.insertarFuncion(funcion, i+1);
+                    baseDatosFunciones.agregar(funcion, i+1);
                     modelo.removeRow(i);
             }
     }
@@ -200,13 +206,11 @@ public class ControlCrearObra implements ActionListener{
         Boolean esNueva=false;
         try {
             ArrayList<Obra> listaObras = new ArrayList<Obra>();
-            ArrayList<Funcion> listaFunciones = new ArrayList<Funcion>();
             DAOObra datosObras = new DAOObra();
-    
+            
             listaObras =datosObras.consultar(" nombre= '"+nuevaObra.getTxtNombreObra().getText()+"'" );// regresa un array 
             //con las obras que tienen nombres iguales
-            //listaFunciones = datosObras.consultarFunciones(nombre)
-            if(listaObras.isEmpty() && listaObras.isEmpty()){
+            if(listaObras.isEmpty()){
                 esNueva=true; 
             }else{
                 escribirMensaje(" ya existe una obra con ese nombre");

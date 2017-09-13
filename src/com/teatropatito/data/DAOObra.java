@@ -25,30 +25,6 @@ public class DAOObra extends DAOGeneral<Obra>{
     public DAOObra(){
     }
 
-//    public int agregar(Obra e) throws SQLException {
-//        int numFilas = 0;
-//        Connection con = getConeccion();
-//        
-//        
-//        String orden ="INSERT INTO \"obras\"(nombre, hora_inicio, hora_final, fecha, estado) VALUES (" +
-//             "'" + e.getNombre() + "', "  +  "'" + e.getHoraInicio() + "'" + ", " + ""
-//   //         "'" + e.getHoraFinal() + "'" +  ", '" + e.getFecha() + "', 'programada' )"
-//                ;
-//        System.out.println(orden);
-//        
-//        DAOAsiento baseDatosAsientos= new DAOAsiento();
-//        baseDatosAsientos.crearDatos(e.getNombre());
-//        
-//        crearTablaHorario(e.getNombre()+"Horarios");
-//        
-//        
-//        Statement sentencia = con.createStatement();
-//        numFilas = sentencia.executeUpdate(orden);
-//        sentencia.close();
-//        cerrarConeccion(con);
-//        return numFilas;
-//
-//    }
 //    agrega la los datos de la obra y agrega los horarios de la obra
     public int agregar(Obra e) throws SQLException {
         int numFilas = 0;
@@ -71,49 +47,12 @@ public class DAOObra extends DAOGeneral<Obra>{
         
         crearTablaFunciones(e.getNombre()+"_funciones");
         
-//        orden ="INSERT INTO \""+ e.getNombre()+"_horarios" +"\" (minuto_inicio,hora_inicio, minuto_final , hora_final, dia, mes, año"
-//                + ") VALUES (" +
-//                "'" + e.getMinutoInicio()+ "', '" +  e.getHoraInicio()  +"',  "+
-//                "'" + e.getMinutoFinal() + "', '" + e.getHoraFinal()    + "', '" + e.getDia() +"', "+
-//                "'" + e.getMes()         + "', '" + e.getAño()          + "');"
-//                ;
-//        
-//        System.out.println(orden);
-        
-//        sentencia = con.createStatement();
-//        numFilas= sentencia.executeUpdate(orden);
         sentencia.close();
         cerrarConeccion(con);
         return numFilas;
-
     }
     
-    public void insertarFuncion(Funcion e, int num) throws SQLException{
-        Connection con = getConeccion();
-        
-        Statement sentencia = con.createStatement();
-
-        
-        String orden ="INSERT INTO public.\""+ e.getNombre()+"_funciones" +"\" (num,minuto_inicio,hora_inicio, minuto_final , hora_final, dia, mes, año, estado"
-                + ") VALUES ("+"'" + num + "',"+
-                "'" + e.getMinutoInicio()+ "', '" +  e.getHoraInicio()  +"',  "+
-                "'" + e.getMinutoFinal() + "', '" + e.getHoraFinal()    + "', '" + e.getDia() +"', "+
-                "'" + e.getMes()         + "', '" + e.getAño()          + "' , 'programada');" ;
-        
-        System.out.println(orden);
-        
-         DAOAsiento baseDatosAsientos= new DAOAsiento();
-        baseDatosAsientos.crearBaseDatosAsientos(e.getNombre(), num );
-        baseDatosAsientos.insertarAsientos(e.getNombre()+num+"");
-        
-        
-        
-        sentencia = con.createStatement();
-        sentencia.executeUpdate(orden);
-        sentencia.close();
-        cerrarConeccion(con);
-  
-    }
+   
     
     public int eliminar(String condicion) throws SQLException {
          int numFilas = 0;
@@ -148,23 +87,7 @@ public class DAOObra extends DAOGeneral<Obra>{
         return numFilas;
     }
     
-        public int cancelarFuncion(String nombre, String num) throws SQLException {
-       int numFilas = 0;
-        Connection con = getConeccion();
-        char comillas= (char)34;
-        
-        String orden = "UPDATE public."+ comillas+nombre+"_funciones"+ comillas + " SET " +
-                " estado='cancelada' "+
-                " WHERE num='"+num+"';";
-        
-        System.out.println(orden);
-        Statement sentencia = con.createStatement();
-        numFilas = sentencia.executeUpdate(orden);
-        sentencia.close();
-        cerrarConeccion(con);
-        return numFilas;
-    }
-    
+
     
     public void cancelarObra(String nombre) throws SQLException{
         Connection con = getConeccion();
@@ -199,31 +122,29 @@ public class DAOObra extends DAOGeneral<Obra>{
                 
     }
     
-    public ArrayList<Funcion> consultarFunciones(String nombre) throws SQLException {
-        
-      ArrayList<Funcion> lista = new ArrayList<Funcion>();
-      Connection con = getConeccion();
-        String seleccion = "SELECT * FROM \""+ nombre+ "_funciones\" WHERE estado= 'programada'";
-        PreparedStatement ps = con.prepareStatement(seleccion);
-        ResultSet rs = ps.executeQuery();
-        
-        while (rs.next()) {
-            Funcion funcion= new Funcion(rs.getString("minuto_inicio"), rs.getString("hora_inicio"), rs.getString("minuto_final"), rs.getString("hora_final"),
-                                rs.getString("hora_final"), rs.getString("dia"), rs.getString("mes"), rs.getString("año"), rs.getString("num"));
-           
-            lista.add(funcion);
-        }
-        ps.close();
-        cerrarConeccion(con);
-        return lista;
-                
-    }
+//    public ArrayList<Funcion> consultarFunciones(String nombre) throws SQLException {
+//        
+//      ArrayList<Funcion> lista = new ArrayList<Funcion>();
+//      Connection con = getConeccion();
+//        String seleccion = "SELECT * FROM \""+ nombre+ "_funciones\" WHERE estado= 'programada'";
+//        PreparedStatement ps = con.prepareStatement(seleccion);
+//        ResultSet rs = ps.executeQuery();
+//        
+//        while (rs.next()) {
+//            Funcion funcion= new Funcion(rs.getString("minuto_inicio"), rs.getString("hora_inicio"), rs.getString("minuto_final"), rs.getString("hora_final"),
+//                                rs.getString("hora_final"), rs.getString("dia"), rs.getString("mes"), rs.getString("año"), rs.getString("num"));
+//           
+//            lista.add(funcion);
+//        }
+//        ps.close();
+//        cerrarConeccion(con);
+//        return lista;           
+//    }
     
     // busca todas las obras que cumplan cierta condicion
     public ArrayList<Obra> consultar(String condicion) throws SQLException{
         // si no existe ... la crea
-        
-        
+
         crearTablaObras();
 
         ArrayList<Obra> lista = new ArrayList<Obra>();
@@ -245,20 +166,20 @@ public class DAOObra extends DAOGeneral<Obra>{
         return lista;
     }
 
-    public String consultarHora(String condicion)throws SQLException{
-        String hora ="";
-        Connection con = getConeccion();
-        String seleccion = "SELECT hora_inicio FROM \"Obras\" WHERE nombre= '" +condicion +"'";
-        Statement sentencia = con.createStatement();
-        ResultSet rs = sentencia.executeQuery( seleccion );
-        
-        if(rs.next()){ 
-          hora =rs.getString("hora_inicio") + " hrs. ";
-        }
-        sentencia.close();
-        cerrarConeccion(con);
-        return hora;   
-    }
+//    public String consultarHora(String condicion)throws SQLException{
+//        String hora ="";
+//        Connection con = getConeccion();
+//        String seleccion = "SELECT hora_inicio FROM \"Obras\" WHERE nombre= '" +condicion +"'";
+//        Statement sentencia = con.createStatement();
+//        ResultSet rs = sentencia.executeQuery( seleccion );
+//        
+//        if(rs.next()){ 
+//          hora =rs.getString("hora_inicio") + " hrs. ";
+//        }
+//        sentencia.close();
+//        cerrarConeccion(con);
+//        return hora;   
+//    }
     
 
     
@@ -277,22 +198,14 @@ public class DAOObra extends DAOGeneral<Obra>{
                 crearColumna("obras", "telefono");
                 crearColumna("obras", "telefono_alterno");
                 crearColumna("obras", "estado");
-                
-                
-                
-                
+
             } catch (SQLException ex) {
                 
                 System.out.println("la tabla Obra ya existe");
             }
              
     }
-    
 
-    
-    
-
-    
     public void crearTablaFunciones(String nombre) {
         
         try {
@@ -310,9 +223,7 @@ public class DAOObra extends DAOGeneral<Obra>{
             
         } catch (SQLException ex) {
             System.out.println("la tabla de horarios para "+nombre+ "ya fue creada");
-        }
-        
-            
+        }     
     }
     
     

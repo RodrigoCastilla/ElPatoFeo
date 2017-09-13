@@ -7,12 +7,12 @@ package com.teatropatito.controlador;
 
 import com.teatropatito.data.DAOObra;
 import com.teatropatito.dominio.Obra;
-import com.teatropatito.vista.CrearNuevaObraVista;
-import com.teatropatito.vista.ModificacionVista;
+import com.teatropatito.vista.ModificarObraVista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,29 +21,31 @@ import java.util.logging.Logger;
  * @author GCTec
  */
 public class ControlModificarObra implements ActionListener{
-    private ModificacionVista modificarObra;
+    private ModificarObraVista modificarObra;
     private Obra obra;
     
 
     public ControlModificarObra(){
-        modificarObra = new ModificacionVista();
+        modificarObra = new ModificarObraVista();
         asignarListaObras();
         
-        this.modificarObra.getGuardarVista().addActionListener(this);
-        this.modificarObra.getCancelarVista().addActionListener(this);
-        this.modificarObra.getCargarVista().addActionListener(this);
+        this.modificarObra.getGuardarBtn().addActionListener(this);
+        this.modificarObra.getVolverBTN().addActionListener(this);
+        this.modificarObra.getRefreshBtn().addActionListener(this);
         this.modificarObra.setVisible(true);
+        this.modificarObra.getPanelDatoaObra().setVisible(false);
+        this.modificarObra.getPanelDatosFunciones().setVisible(false);
         
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         
-         if(modificarObra.getGuardarVista() == e.getSource()){
+         if(modificarObra.getGuardarBtn()== e.getSource()){
              guardarCambios();
-         }else if(modificarObra.getCancelarVista() == e.getSource()){
+         }else if(modificarObra.getVolverBTN()== e.getSource()){
              modificarObra.dispose();
-         }else if(modificarObra.getCargarVista() == e.getSource()){
+         }else if(modificarObra.getRefreshBtn()== e.getSource()){
                 cargarElemento();
          }
         
@@ -55,13 +57,15 @@ public class ControlModificarObra implements ActionListener{
         try {
             DAOObra baseDatosObra = new DAOObra();
             ArrayList<Obra> obras= new ArrayList<Obra>();
-            obras=baseDatosObra.consultar("nombre= '"+modificarObra.getListaObrasVista().getSelectedItem().toString()+ "'");
-            
-            
+            obras=baseDatosObra.consultar("nombre= '"+modificarObra.getObrasCBX().getSelectedItem().toString()+ "'");
+
             //carga los elementos en la interfaz grafica
-            modificarObra.getNombreVista().setText(obras.get(0).getNombre());
-            modificarObra.getHoraInicioVista().setText(obras.get(0).getHoraInicio());
-            modificarObra.getHoraFinVista().setText(obras.get(0).getHoraFinal());
+            modificarObra.getNombreObraTxt().setText(obras.get(0).getNombre());
+            //modificarObra.getHoraInicio().setTimeOnDate(date);
+            modificarObra.getHoraInicio().setText(obras.get(0).getHoraFinal());//.setText(obras.get(0).getHoraInicio());
+            modificarObra.getHoraFin().setText(obras.get(0).getHoraFinal());
+            modificarObra.getMinInicio().setText(obras.get(0).getMinutoInicio());//.setText(obras.get(0).getHoraInicio());
+            modificarObra.getMinFin().setText(obras.get(0).getMinutoFinal());
 //            modificarObra.getFechaVista().setText(obras.get(0).getFecha());
             
             
@@ -77,14 +81,21 @@ public class ControlModificarObra implements ActionListener{
             DAOObra baseDatosObras= new DAOObra();
            
             Obra nuevaObra= new Obra(
-                    modificarObra.getNombreVista().getText(),
-                    modificarObra.getHoraInicioVista().getText(),
-                    modificarObra.getHoraFinVista().getText() /* ,*/
+                    modificarObra.getNombreObraTxt().getText(),
+                    modificarObra.getHoraInicio().getText(),
+                    
+                    modificarObra.getHoraFin().getText() /* ,*/
                   //  modificarObra.getFechaVista().getText()
             );
-            
-            String nombreAntiguo = modificarObra.getListaObrasVista().getSelectedItem().toString();
-            String nuevoNombre= modificarObra.getNombreVista().getText();
+            nuevaObra.setHoraInicio(modificarObra.getHoraInicio().getText());
+            nuevaObra.setMinutoInicio(modificarObra.getMinInicio().getText());
+            nuevaObra.setHoraFinal(modificarObra.getHoraFin().getText());
+            nuevaObra.setMinutoFinal(modificarObra.getMinFin().getText()); 
+            nuevaObra.setDia((modificarObra.getFecha().getCalendar().get(Calendar.DAY_OF_MONTH)));
+            nuevaObra.setMes((modificarObra.getFecha().getCalendar().get(Calendar.MONTH)));
+            nuevaObra.setAño((modificarObra.getFecha().getCalendar().get(Calendar.YEAR))); 
+            String nombreAntiguo = modificarObra.getObrasCBX().getSelectedItem().toString();
+            String nuevoNombre= modificarObra.getNombreObraTxt().getText();
             
             
 
@@ -94,30 +105,22 @@ public class ControlModificarObra implements ActionListener{
         } catch (SQLException ex) {
             Logger.getLogger(ControlModificarObra.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
     }
-    
-    
     
     public void asignarListaObras(){          
         try {
-            modificarObra.getListaObrasVista().removeAllItems();
+            modificarObra.getObrasCBX().removeAllItems();
             DAOObra baseDatosObras= new DAOObra();
             ArrayList<Obra> obras = new ArrayList<Obra>();
             obras=baseDatosObras.consultar();
             
             for (int i = 0; i < obras.size(); i++) {
-                modificarObra.getListaObrasVista().addItem(obras.get(i).getNombre());
+                modificarObra.getObrasCBX().addItem(obras.get(i).getNombre());
             }
             
         } catch (SQLException ex) {
             Logger.getLogger(ControlEliminarObra.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
-        
-        
     }
     
     

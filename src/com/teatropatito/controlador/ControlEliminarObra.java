@@ -5,6 +5,7 @@
  */
 package com.teatropatito.controlador;
 
+import com.teatropatito.data.DAOFuncion;
 import com.teatropatito.data.DAOObra;
 import com.teatropatito.dominio.Funcion;
 import com.teatropatito.dominio.Obra;
@@ -126,11 +127,11 @@ public class ControlEliminarObra implements ActionListener{
     
     public void cargarHorarios(){
         try {
-            DAOObra baseDatos = new DAOObra();
+            DAOFuncion baseDatosFunciones = new DAOFuncion();
             eliminarObra.getNumeroObra().removeAllItems();
             
             ArrayList<Funcion> listaHorarios = new ArrayList<Funcion>();
-            listaHorarios= baseDatos.consultarFunciones(eliminarObra.getListaObras().getSelectedItem()+"");
+            listaHorarios= baseDatosFunciones.consultar(eliminarObra.getListaObras().getSelectedItem()+"");
             
             DefaultTableModel modelo = (DefaultTableModel) eliminarObra.getTabla().getModel();
             JTable tabla =  new JTable(modelo); //permite modificar la tabla
@@ -162,14 +163,16 @@ public class ControlEliminarObra implements ActionListener{
 public void cancelarObraSeleccionada(){
         try {
             eliminarObra.getListaObras().getSelectedItem().toString();
-            DAOObra baseDatos = new DAOObra();
-            baseDatos.cancelarFuncion(
-                    eliminarObra.getListaObras().getSelectedItem().toString(),
-                    eliminarObra.getNumeroObra().getSelectedItem().toString());
+            DAOFuncion baseDatosFunciones = new DAOFuncion();
+            
+            baseDatosFunciones.cancelarFuncion(
+                                        eliminarObra.getListaObras().getSelectedItem().toString(),
+                                        eliminarObra.getNumeroObra().getSelectedItem().toString()
+                                        );
             
             
             asignarListaObrasComboBox();
-            cargarHorarios();
+            
         } catch (SQLException ex) {
             Logger.getLogger(ControlEliminarObra.class.getName()).log(Level.SEVERE, null, ex);
         }
