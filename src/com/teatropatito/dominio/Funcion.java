@@ -19,7 +19,20 @@ public class Funcion {
     private String dia;
     private String mes;
     private String año;
+    private String estado;
 
+    public Funcion(String horaInicio, String horaFinal, String minutoInicio, String minutoFinal, String dia, String mes, String año,String nombre, String num, String estado) {
+        this.nombre = nombre;
+        this.horaInicio = horaInicio;
+        this.horaFinal = horaFinal;
+        this.minutoInicio = minutoInicio;
+        this.minutoFinal = minutoFinal;
+        this.dia = dia;
+        this.mes = mes;
+        this.año = año;
+        this.numero= num;
+        this.estado = estado;
+    }
     public Funcion(String horaInicio, String horaFinal, String minutoInicio, String minutoFinal, String dia, String mes, String año,String nombre, String num) {
         this.nombre = nombre;
         this.horaInicio = horaInicio;
@@ -30,6 +43,7 @@ public class Funcion {
         this.mes = mes;
         this.año = año;
         this.numero= num;
+        this.estado = "programada";
     }
     
 
@@ -50,6 +64,14 @@ public class Funcion {
 
     public void setNumero(String num) {
         this.numero = num;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
     

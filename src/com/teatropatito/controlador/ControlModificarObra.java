@@ -4,15 +4,18 @@
  * and open the template in the editor.
  */
 package com.teatropatito.controlador;
-
+import com.teatropatito.data.DAOFuncion;
 import com.teatropatito.data.DAOObra;
+import com.teatropatito.dominio.Funcion;
 import com.teatropatito.dominio.Obra;
 import com.teatropatito.vista.ModificarObraVista;
+import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,16 +25,21 @@ import java.util.logging.Logger;
  */
 public class ControlModificarObra implements ActionListener{
     private ModificarObraVista modificarObra;
+    private ArrayList<Obra> listaObras;
     private Obra obra;
+    private Funcion funcion;
+    private int ultimaObraSeleccionada, ultimaFuncionSeleccionada;
     
 
-    public ControlModificarObra(){
+    public ControlModificarObra() throws SQLException{
         modificarObra = new ModificarObraVista();
         asignarListaObras();
-        
+        inicializarElementos();
         this.modificarObra.getGuardarBtn().addActionListener(this);
         this.modificarObra.getVolverBTN().addActionListener(this);
         this.modificarObra.getRefreshBtn().addActionListener(this);
+        this.modificarObra.getAgregarFucionbtn().addActionListener(this);
+        this.modificarObra.getEliminarFuncionBtn().addActionListener(this);
         this.modificarObra.setVisible(true);
         this.modificarObra.getPanelDatoaObra().setVisible(false);
         this.modificarObra.getPanelDatosFunciones().setVisible(false);
@@ -46,49 +54,78 @@ public class ControlModificarObra implements ActionListener{
          }else if(modificarObra.getVolverBTN()== e.getSource()){
              modificarObra.dispose();
          }else if(modificarObra.getRefreshBtn()== e.getSource()){
-                cargarElemento();
+             try {
+                 cargarElemento();
+             } catch (SQLException ex) {
+                 Logger.getLogger(ControlModificarObra.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         } else if(modificarObra.getAgregarFucionbtn() == e.getSource()){
+             añadirFuncion();
+         } else if(modificarObra.getEliminarFuncionBtn()== e.getSource()){
+             listaObras.get(ultimaObraSeleccionada).getFunciones().remove(modificarObra.getFuncionesCBX().getSelectedIndex());
+             modificarObra.inicializarComponentes();
          }
         
         
     }
-    
-    public void cargarElemento() {
-      
-        try {
-            DAOObra baseDatosObra = new DAOObra();
-            ArrayList<Obra> obras= new ArrayList<Obra>();
-            obras=baseDatosObra.consultar("nombre= '"+modificarObra.getObrasCBX().getSelectedItem().toString()+ "'");
-
-            //carga los elementos en la interfaz grafica
-            modificarObra.getNombreObraTxt().setText(obras.get(0).getNombre());
-            
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ControlModificarObra.class.getName()).log(Level.SEVERE, null, ex);
+    public void inicializarElementos() throws SQLException{
+        modificarObra.getObrasCBX().removeAllItems();
+        DAOObra baseDatosObra = new DAOObra();
+        DAOFuncion baseDatosFunciones = new DAOFuncion();
+        listaObras= baseDatosObra.consultar("estado= 'programada'");
+        for(int i=0; i<listaObras.size();i++){
+            modificarObra.getObrasCBX().addItem(listaObras.get(i).getNombre());
+            listaObras.get(i).setFunciones(new ArrayList<Funcion>(baseDatosFunciones.consultarProgramadas(listaObras.get(i).getNombre())));
         }
+        cargarElementosFunciones();
     }
+    public void cargarElemento() throws SQLException {
+        ultimaObraSeleccionada = modificarObra.getObrasCBX().getSelectedIndex();
+        cargarElementosFunciones();
+        modificarObra.getPanelDatoaObra().setVisible(true);
+        modificarObra.getPanelDatosFunciones().setVisible(true);
+        modificarObra.getNombreObraTxt().setText(listaObras.get(ultimaObraSeleccionada).getNombre());
+        //modificarObra.inicializarComponentes();
+    }
+    private void cargarElementosFunciones(){
+        modificarObra.getFuncionesCBX().removeAllItems();
+        for(int j=0; j<listaObras.get(ultimaObraSeleccionada).getFunciones().size(); j++){
+            modificarObra.getFuncionesCBX().addItem(listaObras.get(ultimaObraSeleccionada).getFunciones().get(j).getNumero());
+        }
+            ultimaFuncionSeleccionada = modificarObra.getFuncionesCBX().getSelectedIndex();
+            modificarObra.getDiaTxT().setText(listaObras.get(ultimaObraSeleccionada).getFunciones().get(ultimaFuncionSeleccionada).getDia());
+            modificarObra.getMesTxT().setText(listaObras.get(ultimaObraSeleccionada).getFunciones().get(ultimaFuncionSeleccionada).getMes());
+            modificarObra.getAñoTxT().setText(listaObras.get(ultimaObraSeleccionada).getFunciones().get(ultimaFuncionSeleccionada).getAño());
+            modificarObra.getHoraFin().setText(listaObras.get(ultimaObraSeleccionada).getFunciones().get(ultimaFuncionSeleccionada).getHoraFinal());
+            modificarObra.getMinFin().setText(listaObras.get(ultimaObraSeleccionada).getFunciones().get(ultimaFuncionSeleccionada).getMinutoFinal());
+            modificarObra.getHoraInicio().setText(listaObras.get(ultimaObraSeleccionada).getFunciones().get(ultimaFuncionSeleccionada).getHoraInicio());
+            modificarObra.getMinInicio().setText(listaObras.get(ultimaObraSeleccionada).getFunciones().get(ultimaFuncionSeleccionada).getMinutoInicio());
+    }
+    private void añadirFuncion(){
+            Funcion nuevaFuncion;
+            DAOFuncion baseDatosFunciones = new DAOFuncion();
+            nuevaFuncion = new Funcion(modificarObra.getMinInicio().getText(), modificarObra.getHoraFin().getText(),(modificarObra.getMinInicio().getText()), modificarObra.getMinFin().getText(),
+            modificarObra.getDiaTxT().getText(), modificarObra.getMesTxT().getText(),modificarObra.getAñoTxT().getText(),( (listaObras.get(ultimaObraSeleccionada).getFunciones().get(ultimaFuncionSeleccionada).setNumero(listaObras.get(ultimaObraSeleccionada).getFunciones().size()-1+ ""))));
+    }
+    
     
     public void guardarCambios(){
         
         try {
             DAOObra baseDatosObras= new DAOObra();
-           
+            DAOFuncion baseDatosFunciones = new DAOFuncion();
+            listaObras.get(ultimaObraSeleccionada).getFunciones().get(modificarObra.getFuncionesCBX().getSelectedIndex()).setDia(modificarObra.getDiaTxT().getText());
+            listaObras.get(ultimaObraSeleccionada).getFunciones().get(modificarObra.getFuncionesCBX().getSelectedIndex()).setMes(modificarObra.getMesTxT().getText());
+            listaObras.get(ultimaObraSeleccionada).getFunciones().get(modificarObra.getFuncionesCBX().getSelectedIndex()).setAño(modificarObra.getAñoTxT().getText());
+            listaObras.get(ultimaObraSeleccionada).getFunciones().get(modificarObra.getFuncionesCBX().getSelectedIndex()).setHoraFinal(modificarObra.getHoraFin().getText());
+            listaObras.get(ultimaObraSeleccionada).getFunciones().get(modificarObra.getFuncionesCBX().getSelectedIndex()).setMinutoFinal(modificarObra.getMinFin().getText());
+            listaObras.get(ultimaObraSeleccionada).getFunciones().get(modificarObra.getFuncionesCBX().getSelectedIndex()).setHoraInicio(modificarObra.getHoraInicio().getText());
+            listaObras.get(ultimaObraSeleccionada).getFunciones().get(modificarObra.getFuncionesCBX().getSelectedIndex()).setMinutoFinal(modificarObra.getMinInicio().getText());
+            baseDatosFunciones.modificar(listaObras.get(ultimaObraSeleccionada).getFunciones().get(modificarObra.getFuncionesCBX().getSelectedIndex()), "");
             Obra nuevaObra= new Obra(modificarObra.getNombreObraTxt().getText());
-/*            nuevaObra.setHoraInicio(modificarObra.getHoraInicio().getText());
-            nuevaObra.setMinutoInicio(modificarObra.getMinInicio().getText());
-            nuevaObra.setHoraFinal(modificarObra.getHoraFin().getText());
-            nuevaObra.setMinutoFinal(modificarObra.getMinFin().getText()); 
-            nuevaObra.setDia((modificarObra.getFecha().getCalendar().get(Calendar.DAY_OF_MONTH)) + "");
-            nuevaObra.setMes((modificarObra.getFecha().getCalendar().get(Calendar.MONTH))+ "");
-            nuevaObra.setAño((modificarObra.getFecha().getCalendar().get(Calendar.YEAR))+""); */
             String nombreAntiguo = modificarObra.getObrasCBX().getSelectedItem().toString();
             String nuevoNombre= modificarObra.getNombreObraTxt().getText();
-            
-            
-
-            baseDatosObras.renombrarTabla(nombreAntiguo, nuevoNombre);
-            baseDatosObras.modificar(nuevaObra, " nombre= '"+nombreAntiguo+"'");
+            baseDatosObras.modificar(listaObras.get(ultimaObraSeleccionada), " nombre= '"+nombreAntiguo+"'");
             
         } catch (SQLException ex) {
             Logger.getLogger(ControlModificarObra.class.getName()).log(Level.SEVERE, null, ex);

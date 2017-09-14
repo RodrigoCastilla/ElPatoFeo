@@ -45,7 +45,6 @@ public class ModificarObraVista extends javax.swing.JFrame {
         horaInicioLbl = new javax.swing.JLabel();
         horaFinLbl = new javax.swing.JLabel();
         FechaLbl = new javax.swing.JLabel();
-        fecha = new com.toedter.calendar.JDateChooser();
         horaInicio = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         minInicio = new javax.swing.JTextField();
@@ -54,9 +53,19 @@ public class ModificarObraVista extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         minFin = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        eliminarFuncionBtn = new javax.swing.JButton();
+        agregarFucionbtn = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        diaTxT = new javax.swing.JTextField();
+        mesTxT = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        añoTxT = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         guardarBtn = new javax.swing.JButton();
         volverBTN = new javax.swing.JButton();
         refreshBtn = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,6 +130,23 @@ public class ModificarObraVista extends javax.swing.JFrame {
 
         jLabel4.setText("mins.");
 
+        eliminarFuncionBtn.setText("Eliminar");
+
+        agregarFucionbtn.setText("Agregar");
+
+        diaTxT.setText("00");
+
+        mesTxT.setText("00");
+
+        jLabel6.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel6.setText("formato: dd/mm/aa");
+
+        añoTxT.setText("00");
+
+        jLabel8.setText("/");
+
+        jLabel9.setText("/");
+
         javax.swing.GroupLayout panelDatosFuncionesLayout = new javax.swing.GroupLayout(panelDatosFunciones);
         panelDatosFunciones.setLayout(panelDatosFuncionesLayout);
         panelDatosFuncionesLayout.setHorizontalGroup(
@@ -129,15 +155,24 @@ public class ModificarObraVista extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(listaFuncionesLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FechaLbl))
+                    .addGroup(panelDatosFuncionesLayout.createSequentialGroup()
+                        .addComponent(FechaLbl)
+                        .addGap(18, 18, 18)
+                        .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(panelDatosFuncionesLayout.createSequentialGroup()
+                                .addComponent(diaTxT, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(mesTxT, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(añoTxT, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(48, 48, 48)
                 .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosFuncionesLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(funcionesCBX, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(278, Short.MAX_VALUE))
-                    .addGroup(panelDatosFuncionesLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(horaInicioLbl)
                         .addGap(8, 8, 8)
@@ -148,17 +183,29 @@ public class ModificarObraVista extends javax.swing.JFrame {
                         .addComponent(minInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
-                        .addGap(38, 38, 38)
-                        .addComponent(horaFinLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(horaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
+                        .addGap(38, 38, 38))
+                    .addGroup(panelDatosFuncionesLayout.createSequentialGroup()
+                        .addComponent(funcionesCBX, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDatosFuncionesLayout.createSequentialGroup()
+                        .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDatosFuncionesLayout.createSequentialGroup()
+                                .addComponent(horaFinLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(horaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3))
+                            .addComponent(eliminarFuncionBtn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(minFin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
-                        .addGap(38, 38, 38))))
+                        .addGap(38, 38, 38))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosFuncionesLayout.createSequentialGroup()
+                        .addComponent(agregarFucionbtn)
+                        .addContainerGap())))
+            .addComponent(jSeparator1)
         );
         panelDatosFuncionesLayout.setVerticalGroup(
             panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,28 +213,40 @@ public class ModificarObraVista extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(listaFuncionesLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(funcionesCBX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(funcionesCBX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(eliminarFuncionBtn))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosFuncionesLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(FechaLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panelDatosFuncionesLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
+                        .addGap(21, 21, 21)
                         .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(horaFinLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(horaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(minFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
+                            .addComponent(FechaLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(diaTxT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mesTxT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(añoTxT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addContainerGap())
+                    .addGroup(panelDatosFuncionesLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(horaInicioLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(horaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel1)
                                 .addComponent(minInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel2))
+                            .addGroup(panelDatosFuncionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(horaFinLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(horaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)
+                                .addComponent(minFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(agregarFucionbtn))))
         );
 
         guardarBtn.setText("Guardar");
@@ -201,26 +260,26 @@ public class ModificarObraVista extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(listaObrasLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(ObrasCBX, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(refreshBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(volverBTN)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(guardarBtn)
-                .addGap(85, 85, 85))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelDatoaObra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelDatosFunciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(listaObrasLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(ObrasCBX, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(refreshBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelDatoaObra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelDatosFunciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(volverBTN)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(guardarBtn)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -235,10 +294,12 @@ public class ModificarObraVista extends javax.swing.JFrame {
                 .addComponent(panelDatoaObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(panelDatosFunciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(guardarBtn)
-                    .addComponent(volverBTN))
+                    .addComponent(volverBTN)
+                    .addComponent(guardarBtn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -304,13 +365,7 @@ public class ModificarObraVista extends javax.swing.JFrame {
         this.guardarBtn = guardarBtn;
     }
 
-    public JDateChooser getFecha() {
-        return fecha;
-    }
 
-    public void setFecha(JDateChooser jDateChooser1) {
-        this.fecha = jDateChooser1;
-    }
 
     public JTextField getNombreObraTxt() {
         return nombreObraTxt;
@@ -383,6 +438,46 @@ public class ModificarObraVista extends javax.swing.JFrame {
     public void setHoraFin(JTextField horaFin) {
         this.horaFin = horaFin;
     }
+
+    public JButton getAgregarFucionbtn() {
+        return agregarFucionbtn;
+    }
+
+    public void setAgregarFucionbtn(JButton agregarFucionbtn) {
+        this.agregarFucionbtn = agregarFucionbtn;
+    }
+
+    public JButton getEliminarFuncionBtn() {
+        return eliminarFuncionBtn;
+    }
+
+    public void setEliminarFuncionBtn(JButton eliminarFuncionBtn) {
+        this.eliminarFuncionBtn = eliminarFuncionBtn;
+    }
+
+    public JTextField getAñoTxT() {
+        return añoTxT;
+    }
+
+    public void setAñoTxT(JTextField añoTxT) {
+        this.añoTxT = añoTxT;
+    }
+
+    public JTextField getDiaTxT() {
+        return diaTxT;
+    }
+
+    public void setDiaTxT(JTextField diaTxT) {
+        this.diaTxT = diaTxT;
+    }
+
+    public JTextField getMesTxT() {
+        return mesTxT;
+    }
+
+    public void setMesTxT(JTextField mesTxT) {
+        this.mesTxT = mesTxT;
+    }
     
     
     public void inicializarComponentes(){
@@ -392,7 +487,10 @@ public class ModificarObraVista extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel FechaLbl;
     private javax.swing.JComboBox<String> ObrasCBX;
-    private com.toedter.calendar.JDateChooser fecha;
+    private javax.swing.JButton agregarFucionbtn;
+    private javax.swing.JTextField añoTxT;
+    private javax.swing.JTextField diaTxT;
+    private javax.swing.JButton eliminarFuncionBtn;
     private javax.swing.JComboBox<String> funcionesCBX;
     private javax.swing.JButton guardarBtn;
     private javax.swing.JTextField horaFin;
@@ -403,8 +501,14 @@ public class ModificarObraVista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel listaFuncionesLbl;
     private javax.swing.JLabel listaObrasLbl1;
+    private javax.swing.JTextField mesTxT;
     private javax.swing.JTextField minFin;
     private javax.swing.JTextField minInicio;
     private javax.swing.JLabel nombreObraLbl;

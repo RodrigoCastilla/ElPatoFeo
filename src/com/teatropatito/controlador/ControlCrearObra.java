@@ -71,7 +71,11 @@ public class ControlCrearObra implements ActionListener{
            limpiarCrearNuevaObraVista();
            
        }else if(nuevaObra.getAgregar()== e.getSource()){
-           agregarElementoTabla();
+           try {
+               agregarElementoTabla();
+           } catch (SQLException ex) {
+               Logger.getLogger(ControlCrearObra.class.getName()).log(Level.SEVERE, null, ex);
+           }
            
        }else if(nuevaObra.getQuitar()== e.getSource()){
            quitarElementosTabla();
@@ -98,19 +102,26 @@ public class ControlCrearObra implements ActionListener{
     }
     
    
-    public void agregarElementoTabla(){
+    public void agregarElementoTabla() throws SQLException{
         try{
         DefaultTableModel modelo = (DefaultTableModel) nuevaObra.getTabla().getModel();
         JTable tabla =  new JTable(modelo); //permite modificar la tabla
         nuevaObra.setTabla(tabla);
-        
-        String[] datosObra= {nuevaObra.getHoraInicio().getMinutes()+"",nuevaObra.getHoraInicio().getHours()+"", 
+        DAOFuncion baseDatosFunciones = new DAOFuncion();
+        if(baseDatosFunciones.verificarExistenciaFuncion(new Funcion(nuevaObra.getHoraInicio().getHours()+"",nuevaObra.getHoraFin()+"",nuevaObra.getHoraInicio().getMinutes()+"",nuevaObra.getHoraFin().getMinutes()+"",
+        nuevaObra.getFecha().getCalendar().get(Calendar.DAY_OF_MONTH)+"", (nuevaObra.getFecha().getCalendar().get(Calendar.MONTH)+1) +"", nuevaObra.getFecha().getCalendar().get(Calendar.YEAR)+"", "")) ){
+            
+            escribirMensaje("Ya existe una función en ese horario.");
+        }else{
+            String[] datosObra= {nuevaObra.getHoraInicio().getMinutes()+"",nuevaObra.getHoraInicio().getHours()+"", 
                     nuevaObra.getHoraFin().getMinutes()+"",nuevaObra.getHoraFin().getHours()+"",
                     nuevaObra.getFecha().getCalendar().get(Calendar.DAY_OF_MONTH)+"" , (nuevaObra.getFecha().getCalendar().get(Calendar.MONTH)+1) +"",
                             nuevaObra.getFecha().getCalendar().get(Calendar.YEAR)+"" };
         
 
-        modelo.addRow(datosObra);
+            modelo.addRow(datosObra);
+        }
+        
         
         
         nuevaObra.getjScrollPane1().updateUI();
@@ -170,7 +181,6 @@ public class ControlCrearObra implements ActionListener{
             
             Funcion funcion;
             
-            
             for (int i = 0; i < nuevaObra.getTabla().getModel().getRowCount(); i++) {
                 
                     funcion= new Funcion(
@@ -203,8 +213,17 @@ public class ControlCrearObra implements ActionListener{
             DAOObra datosObras = new DAOObra();
             DAOFuncion datosFunciones = new DAOFuncion();
             listaObras =datosObras.consultar(" nombre= '"+nuevaObra.getTxtNombreObra().getText()+"'" );// regresa un array 
+            
+            ArrayList<Funcion> listaFunciones;
+            /*for(int i =0; i< listaObras.size(); i++){
+                listaFunciones = datosFunciones.consultarProgramadas(listaObras.get(i).getNombre());
+                listaObras.get(i).setFunciones(funciones);
+            }*/
+            
+            
             //con las obras que tienen nombres iguales
             if(listaObras.isEmpty()){
+                listaFunciones = obra.getFunciones();
                 esNueva=true; 
             }else{
                 escribirMensaje(" ya existe una obra con ese nombre");

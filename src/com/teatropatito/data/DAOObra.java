@@ -78,7 +78,7 @@ public class DAOObra extends DAOGeneral<Obra>{
         
         System.out.println(orden);
         Statement sentencia = con.createStatement();
-        numFilas = sentencia.executeUpdate(orden);
+//        numFilas = sentencia.executeUpdate(orden);
         sentencia.close();
         cerrarConeccion(con);
         return numFilas;
@@ -118,26 +118,7 @@ public class DAOObra extends DAOGeneral<Obra>{
         return lista;
                 
     }
-    
-//    public ArrayList<Funcion> consultarFunciones(String nombre) throws SQLException {
-//        
-//      ArrayList<Funcion> lista = new ArrayList<Funcion>();
-//      Connection con = getConeccion();
-//        String seleccion = "SELECT * FROM \""+ nombre+ "_funciones\" WHERE estado= 'programada'";
-//        PreparedStatement ps = con.prepareStatement(seleccion);
-//        ResultSet rs = ps.executeQuery();
-//        
-//        while (rs.next()) {
-//            Funcion funcion= new Funcion(rs.getString("minuto_inicio"), rs.getString("hora_inicio"), rs.getString("minuto_final"), rs.getString("hora_final"),
-//                                rs.getString("hora_final"), rs.getString("dia"), rs.getString("mes"), rs.getString("año"), rs.getString("num"));
-//           
-//            lista.add(funcion);
-//        }
-//        ps.close();
-//        cerrarConeccion(con);
-//        return lista;           
-//    }
-    
+
     // busca todas las obras que cumplan cierta condicion
     public ArrayList<Obra> consultar(String condicion) throws SQLException{
         // si no existe ... la crea
@@ -163,25 +144,6 @@ public class DAOObra extends DAOGeneral<Obra>{
         return lista;
     }
 
-//    public String consultarHora(String condicion)throws SQLException{
-//        String hora ="";
-//        Connection con = getConeccion();
-//        String seleccion = "SELECT hora_inicio FROM \"Obras\" WHERE nombre= '" +condicion +"'";
-//        Statement sentencia = con.createStatement();
-//        ResultSet rs = sentencia.executeQuery( seleccion );
-//        
-//        if(rs.next()){ 
-//          hora =rs.getString("hora_inicio") + " hrs. ";
-//        }
-//        sentencia.close();
-//        cerrarConeccion(con);
-//        return hora;   
-//    }
-    
-
-    
-
-    
         public void crearTablaObras(){
         
             try {

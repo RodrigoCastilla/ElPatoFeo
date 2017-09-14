@@ -109,6 +109,29 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         return lista;
                 
     }
+    public ArrayList<Funcion> consultarProgramadas(String nombre) throws SQLException {
+        
+        ArrayList<Funcion> lista = new ArrayList<Funcion>();
+        Connection con = getConeccion();
+        String seleccion = "SELECT * FROM \"funciones\" WHERE obra= '"+nombre+"'";
+        PreparedStatement ps = con.prepareStatement(seleccion);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            Funcion funcion= new Funcion(rs.getString("minuto_inicio"), rs.getString("hora_inicio"), rs.getString("minuto_final"), rs.getString("hora_final"),
+                                rs.getString("hora_final"), rs.getString("dia"), rs.getString("mes"), rs.getString("año"), rs.getString("num"), rs.getString("estado"));
+           
+            lista.add(funcion);
+        }
+        ps.close();
+        cerrarConeccion(con);
+        for(int i=0; i<lista.size(); i++){
+            if(lista.get(i).getEstado().compareTo("cancelada") == 0)
+                lista.remove(i);
+        }
+        return lista;
+                
+    }
     
     
 
@@ -123,7 +146,7 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         Connection con = getConeccion();
         char comillas= (char)34;
         
-        String orden = "UPDATE public."+ comillas+funcion.getNombre()+"_funciones"+ comillas + " SET " +
+        String orden = "UPDATE public."+ comillas+"funciones"+ comillas + " SET " +
                 " minuto_inicio="+funcion.getMinutoInicio()+
                 " hora_inicio="+funcion.getHoraFinal()+
                 " minuto_final="+funcion.getMinutoFinal()+
@@ -138,36 +161,53 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         
         System.out.println(orden);
         Statement sentencia = con.createStatement();
-        numFilas = sentencia.executeUpdate(orden);
+//        numFilas = sentencia.executeUpdate(orden);
         sentencia.close();
         cerrarConeccion(con);
         return numFilas;
     }
 
     
-        public void crearTablaFunciones() {
+    public void crearTablaFunciones() {
 
-    try {
-        crearTabla("funciones");
-        
-        crearColumna("funciones", "num"         );
-        crearColumna("funciones", "obra"         );
-        crearColumna("funciones", "minuto_inicio");
-        crearColumna("funciones", "hora_inicio" );
-        crearColumna("funciones", "minuto_final");
-        crearColumna("funciones", "hora_final"  );
-        crearColumna("funciones", "dia"         );
-        crearColumna("funciones", "mes"         );
-        crearColumna("funciones", "año"         );
-        crearColumna("funciones", "estado"      );
+        try {
+            crearTabla("funciones");
+
+            crearColumna("funciones", "num"         );
+            crearColumna("funciones", "obra"         );
+            crearColumna("funciones", "minuto_inicio");
+            crearColumna("funciones", "hora_inicio" );
+            crearColumna("funciones", "minuto_final");
+            crearColumna("funciones", "hora_final"  );
+            crearColumna("funciones", "dia"         );
+            crearColumna("funciones", "mes"         );
+            crearColumna("funciones", "año"         );
+            crearColumna("funciones", "estado"      );
 
 
-    } catch (SQLException ex) {
-        System.out.println("la tabla de funcion ya fue creada");
-    }  
+        } catch (SQLException ex) {
+            System.out.println("la tabla de funcion ya fue creada");
+        }  
 
-}
+    }
 
+    public boolean verificarExistenciaFuncion(Funcion funcion) throws SQLException{
+        boolean repetido = false;
+        ArrayList<Funcion> funciones = consultarTodas();
+        for(int i=0; i<funciones.size(); i++){
+            if(funciones.get(i).getDia().compareTo(funcion.getDia())==0 && funciones.get(i).getMes().compareTo(funcion.getMes())==0 && funciones.get(i).getAño().compareTo(funcion.getAño())==0){
+                if(((Integer.parseInt(funciones.get(i).getHoraInicio()) >= Integer.parseInt(funcion.getHoraInicio())) && (Integer.parseInt(funciones.get(i).getHoraFinal()) <= Integer.parseInt(funcion.getHoraFinal()))) ||
+                    ((Integer.parseInt(funciones.get(i).getHoraInicio()) >= Integer.parseInt(funcion.getHoraInicio())) && (Integer.parseInt(funciones.get(i).getHoraFinal()) <= Integer.parseInt(funcion.getHoraFinal()))) /*||
+                    ((Integer.parseInt(funciones.get(i).getHoraInicio()) >= Integer.parseInt(funcion.getHoraInicio())) && (Integer.parseInt(funciones.get(i).getHoraFinal()) <= Integer.parseInt(funcion.getHoraFinal()))) ||
+                    ((Integer.parseInt(funciones.get(i).getHoraInicio()) >= Integer.parseInt(funcion.getHoraInicio())) && (Integer.parseInt(funciones.get(i).getHoraFinal()) <= Integer.parseInt(funcion.getHoraFinal())))*/){
+                    repetido = true;
+                    
+                }
+            }
+        }
+
+        return repetido;
+    }
     
 //        public void crearTablaFunciones(String nombre) {
 //        
@@ -197,12 +237,17 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
     
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         
         DAOFuncion dao = new DAOFuncion();
         Funcion fun= new Funcion("","","","","","","","");
+        if(dao.verificarExistenciaFuncion(fun))
+            System.out.println("Ups, Existe");
+        else
+            System.out.println("Parece que es nueva");
         
     }
+    
     
     
 }
