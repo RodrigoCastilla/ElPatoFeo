@@ -102,10 +102,7 @@ public class ControlModificarObra implements ActionListener{
             modificarObra.getMinInicio().setText(listaObras.get(ultimaObraSeleccionada).getFunciones().get(ultimaFuncionSeleccionada).getMinutoInicio());
     }
     private void añadirFuncion(){
-            Funcion nuevaFuncion;
-            DAOFuncion baseDatosFunciones = new DAOFuncion();
-            nuevaFuncion = new Funcion(modificarObra.getMinInicio().getText(), modificarObra.getHoraFin().getText(),(modificarObra.getMinInicio().getText()), modificarObra.getMinFin().getText(),
-            modificarObra.getDiaTxT().getText(), modificarObra.getMesTxT().getText(),modificarObra.getAñoTxT().getText(),( (listaObras.get(ultimaObraSeleccionada).getFunciones().get(ultimaFuncionSeleccionada).setNumero(listaObras.get(ultimaObraSeleccionada).getFunciones().size()-1+ ""))));
+            Funcion nuevaFuncion= new Funcion(modificarObra.getMinInicio().getText(), modificarObra.getHoraFin().getText(),(modificarObra.getMinInicio().getText()), modificarObra.getMinFin().getText(),modificarObra.getDiaTxT().getText(), modificarObra.getMesTxT().getText(),modificarObra.getAñoTxT().getText(), (listaObras.get(ultimaObraSeleccionada).getFunciones().size()-1)+ "");
     }
     
     
