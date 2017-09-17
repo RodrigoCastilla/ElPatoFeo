@@ -147,16 +147,16 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         char comillas= (char)34;
         
         String orden = "UPDATE public."+ comillas+"funciones"+ comillas + " SET " +
-                " minuto_inicio="+funcion.getMinutoInicio()+
-                " hora_inicio="+funcion.getHoraFinal()+
-                " minuto_final="+funcion.getMinutoFinal()+
-                " hora_final="+funcion.getHoraFinal()+
-                " dia="+funcion.getDia()+
-                " mes="+funcion.getMes()+
-                " año="+funcion.getAño()+
+                " minuto_inicio='"+funcion.getMinutoInicio()+ "'," +
+                " hora_inicio='"+funcion.getHoraFinal()+ "'," +
+                " minuto_final'="+funcion.getMinutoFinal()+  "'," +
+                " hora_final='"+funcion.getHoraFinal()+  "'," +
+                " dia='"+funcion.getDia()+  "'," +
+                " mes='"+funcion.getMes()+  "'," +
+                " año='"+funcion.getAño()+  "'," +
+                " estado_modificacion= 'modificada' " +
                 
-                
-                " WHERE num='"+funcion.getNumero()+"';";
+                " WHERE num='"+funcion.getNumero()+"' and"+ condicion+ ";";
         
         
         System.out.println(orden);
@@ -173,16 +173,17 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         try {
             crearTabla("funciones");
 
-            crearColumna("funciones", "num"         );
+            crearColumna("funciones", "num"          );
             crearColumna("funciones", "obra"         );
             crearColumna("funciones", "minuto_inicio");
-            crearColumna("funciones", "hora_inicio" );
-            crearColumna("funciones", "minuto_final");
-            crearColumna("funciones", "hora_final"  );
-            crearColumna("funciones", "dia"         );
-            crearColumna("funciones", "mes"         );
-            crearColumna("funciones", "año"         );
-            crearColumna("funciones", "estado"      );
+            crearColumna("funciones", "hora_inicio"  );
+            crearColumna("funciones", "minuto_final" );
+            crearColumna("funciones", "hora_final"   );
+            crearColumna("funciones", "dia"          );
+            crearColumna("funciones", "mes"          );
+            crearColumna("funciones", "año"          );
+            crearColumna("funciones", "estado"       );
+            crearColumna("funciones", "estado_modificacion");
 
 
         } catch (SQLException ex) {

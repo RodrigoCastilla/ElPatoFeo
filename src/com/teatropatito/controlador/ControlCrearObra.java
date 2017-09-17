@@ -114,9 +114,9 @@ public class ControlCrearObra implements ActionListener{
             escribirMensaje("Ya existe una función en ese horario.");
         }else{
             String[] datosObra= {nuevaObra.getHoraInicio().getMinutes()+"",nuevaObra.getHoraInicio().getHours()+"", 
-                    nuevaObra.getHoraFin().getMinutes()+"",nuevaObra.getHoraFin().getHours()+"",
-                    nuevaObra.getFecha().getCalendar().get(Calendar.DAY_OF_MONTH)+"" , (nuevaObra.getFecha().getCalendar().get(Calendar.MONTH)+1) +"",
-                            nuevaObra.getFecha().getCalendar().get(Calendar.YEAR)+"" };
+                                 nuevaObra.getHoraFin().getMinutes()+"",nuevaObra.getHoraFin().getHours()+"",
+                                 nuevaObra.getFecha().getCalendar().get(Calendar.DAY_OF_MONTH)+"" , (nuevaObra.getFecha().getCalendar().get(Calendar.MONTH)+1) +"",
+                                 nuevaObra.getFecha().getCalendar().get(Calendar.YEAR)+"" };
         
 
             modelo.addRow(datosObra);

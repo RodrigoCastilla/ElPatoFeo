@@ -54,11 +54,7 @@ public class ControlModificarObra implements ActionListener{
          }else if(modificarObra.getVolverBTN()== e.getSource()){
              modificarObra.dispose();
          }else if(modificarObra.getRefreshBtn()== e.getSource()){
-             try {
-                 cargarElemento();
-             } catch (SQLException ex) {
-                 Logger.getLogger(ControlModificarObra.class.getName()).log(Level.SEVERE, null, ex);
-             }
+             cargarElemento();
          } else if(modificarObra.getAgregarFucionbtn() == e.getSource()){
              añadirFuncion();
          } else if(modificarObra.getEliminarFuncionBtn()== e.getSource()){
@@ -68,25 +64,29 @@ public class ControlModificarObra implements ActionListener{
         
         
     }
-    public void inicializarElementos() throws SQLException{
-        modificarObra.getObrasCBX().removeAllItems();
-        DAOObra baseDatosObra = new DAOObra();
-        DAOFuncion baseDatosFunciones = new DAOFuncion();
-        listaObras= baseDatosObra.consultar("estado= 'programada'");
-        for(int i=0; i<listaObras.size();i++){
-            modificarObra.getObrasCBX().addItem(listaObras.get(i).getNombre());
-            listaObras.get(i).setFunciones(new ArrayList<Funcion>(baseDatosFunciones.consultarProgramadas(listaObras.get(i).getNombre())));
+    public void inicializarElementos() {
+        try {
+            modificarObra.getObrasCBX().removeAllItems();
+            DAOObra baseDatosObra = new DAOObra();
+            DAOFuncion baseDatosFunciones = new DAOFuncion();
+            listaObras= baseDatosObra.consultar("estado= 'programada'");
+            for(int i=0; i<listaObras.size();i++){
+                modificarObra.getObrasCBX().addItem(listaObras.get(i).getNombre());
+                listaObras.get(i).setFunciones(new ArrayList<Funcion>(baseDatosFunciones.consultarProgramadas(listaObras.get(i).getNombre())));
+            }
+            cargarElementosFunciones();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlModificarObra.class.getName()).log(Level.SEVERE, null, ex);
         }
-        cargarElementosFunciones();
     }
-    public void cargarElemento() throws SQLException {
-        ultimaObraSeleccionada = modificarObra.getObrasCBX().getSelectedIndex();
+    public void cargarElemento() {
+        ultimaObraSeleccionada = modificarObra.getObrasCBX().getSelectedIndex(); //modificarObra.inicializarComponentes();
         cargarElementosFunciones();
         modificarObra.getPanelDatoaObra().setVisible(true);
         modificarObra.getPanelDatosFunciones().setVisible(true);
         modificarObra.getNombreObraTxt().setText(listaObras.get(ultimaObraSeleccionada).getNombre());
-        //modificarObra.inicializarComponentes();
     }
+    
     private void cargarElementosFunciones(){
         modificarObra.getFuncionesCBX().removeAllItems();
         for(int j=0; j<listaObras.get(ultimaObraSeleccionada).getFunciones().size(); j++){
