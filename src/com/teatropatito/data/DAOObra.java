@@ -73,7 +73,7 @@ public class DAOObra extends DAOGeneral<Obra>{
         Connection con = getConeccion();
 
         String orden = "UPDATE public.obras SET " +
-                " nombre='"+e.getNombre()+"',"+
+                " nombre='"+e.getNombre()+"' "+
                 " WHERE "+condicion;
         
         System.out.println(orden);

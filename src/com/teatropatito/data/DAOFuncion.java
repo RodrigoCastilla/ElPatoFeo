@@ -73,7 +73,7 @@ public class DAOFuncion extends DAOGeneral<Funcion> {
         
         ArrayList<Funcion> lista = new ArrayList<Funcion>();
         Connection con = getConeccion();
-        String seleccion = "SELECT * FROM \"funciones\" WHERE estado= 'programada'";
+        String seleccion = "SELECT * FROM \"funciones\" WHERE estado= 'programada' and "+ nombre;
         PreparedStatement ps = con.prepareStatement(seleccion);
         ResultSet rs = ps.executeQuery();
         

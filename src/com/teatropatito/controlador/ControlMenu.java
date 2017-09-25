@@ -8,6 +8,9 @@ package com.teatropatito.controlador;
 import com.teatropatito.vista.MenuPrincipalVista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,7 +48,11 @@ public class ControlMenu implements ActionListener {
         }else if(menu.getImprimirReporte() == e.getSource()){
             ControlReporte reporte = new ControlReporte();
         }else if(menu.getModificarObra() == e.getSource()){
-            ControlModificarObra modificarObra = new ControlModificarObra();
+            try {
+                ControlModificarObra modificarObra = new ControlModificarObra();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControlMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     

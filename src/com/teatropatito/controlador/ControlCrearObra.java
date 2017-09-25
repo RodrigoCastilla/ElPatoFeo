@@ -214,7 +214,7 @@ public class ControlCrearObra implements ActionListener{
             DAOFuncion datosFunciones = new DAOFuncion();
             listaObras =datosObras.consultar(" nombre= '"+nuevaObra.getTxtNombreObra().getText()+"'" );// regresa un array 
             
-            ArrayList<Funcion> listaFunciones;
+            ArrayList<Obra> listaFunciones;
             /*for(int i =0; i< listaObras.size(); i++){
                 listaFunciones = datosFunciones.consultarProgramadas(listaObras.get(i).getNombre());
                 listaObras.get(i).setFunciones(funciones);
@@ -223,7 +223,7 @@ public class ControlCrearObra implements ActionListener{
             
             //con las obras que tienen nombres iguales
             if(listaObras.isEmpty()){
-                listaFunciones = obra.getFunciones();
+                
                 esNueva=true; 
             }else{
                 escribirMensaje(" ya existe una obra con ese nombre");
